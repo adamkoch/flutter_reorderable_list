@@ -93,9 +93,11 @@ class ReorderableItem extends StatefulWidget {
   ReorderableItem({
     required Key key,
     required this.childBuilder,
+    this.onDragStart,
   }) : super(key: key);
 
   final ReorderableItemChildBuilder childBuilder;
+  final VoidCallback? onDragStart;
 
   @override
   createState() => _ReorderableItemState();
@@ -285,6 +287,7 @@ class _ReorderableListState extends State<ReorderableList>
     widget.onReorderStart?.call();
     _hapticFeedback();
     final draggedItem = _items[_dragging]!;
+    draggedItem.widget.onDragStart?.call();
     draggedItem.update();
     _dragProxy!.setWidget(
         draggedItem.widget
